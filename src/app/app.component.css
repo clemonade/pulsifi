@@ -1,0 +1,5 @@
+:host ::ng-deep router-outlet ~ * {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid red; /*TODO*/
+}

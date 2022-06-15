@@ -1,0 +1,57 @@
+<div fxFill
+     fxLayout="column">
+  <mat-table [dataSource]="dataSource"
+             matSort
+             class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> id</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> name</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> fullName</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.fullName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="numValue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> numValue</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.numValue}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="boolValue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> boolValue</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.boolValue}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="enumValue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> enumValue</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.enumValue}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateFrom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> dateFrom</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.dateFrom}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateTo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> dateTo</mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{data.dateTo}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    <div *matNoDataRow>
+      hello there
+    </div>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>
