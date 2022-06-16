@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from "rxjs";
+import {delay, Observable, of} from "rxjs";
 import {DATA, Datum} from "./data.model";
 
 
@@ -12,6 +12,7 @@ export class DataService {
   }
 
   getData(): Observable<Datum[]> {
-    return of(DATA);
+    return of(DATA)
+      .pipe(delay(100));
   }
 }
