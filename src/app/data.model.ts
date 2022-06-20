@@ -1,10 +1,22 @@
 export const DATE_FORMAT = 'yyyy-MM-DD'
 
+export interface Filter {
+  text: string;
+  numberMin: number;
+  numberMax: number;
+  boolean: string;
+  enums: boolean[];
+  dateFrom: string;
+  dateTo: string;
+}
+
 export enum Type {
   A = 'A',
   B = 'B',
   C = 'C',
 }
+
+export const TYPES: string[] = Object.values(Type);
 
 export interface Datum {
   id: number;

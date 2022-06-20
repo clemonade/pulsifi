@@ -21,11 +21,15 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {FilterComponent} from './filter/filter.component';
+import {TableComponent} from './table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    FilterComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,
