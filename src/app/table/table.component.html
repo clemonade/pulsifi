@@ -1,5 +1,6 @@
-<mat-table [dataSource]="dataSource"
-           matSort
+<mat-table matSort
+           [dataSource]="dataSource"
+           (matSortChange)="onSortEvent($event)"
            class="mat-elevation-z8">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> id</mat-header-cell>
@@ -37,15 +38,23 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"
+           [class.hide-row]="isLoading"></mat-row>
 
   <div *matNoDataRow
        fxLayout="row"
        fxLayoutAlign="center center"
-       class="no-data-row">
+       class="no-data-row"
+       [class.hide-row]="isLoading">
     <span>No matching data</span>
   </div>
 </mat-table>
+
+<mat-card *ngIf="isLoading"
+          fxLayout="row"
+          fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</mat-card>
 
 <mat-paginator [pageIndex]="pageIndex"
                [pageSizeOptions]="pageSizeOptions"

@@ -23,6 +23,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {FilterComponent} from './filter/filter.component';
 import {TableComponent} from './table/table.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import {TableComponent} from './table/table.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   providers: [
     CdkColumnDef

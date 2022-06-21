@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatTableDataSource} from "@angular/material/table";
 import {Datum} from "../data.model";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable, Sort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-table',
@@ -14,6 +14,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   set data(value: Datum[]) {
     this.dataSource.data = value;
   }
+
+  @Input() isLoading: boolean = false;
 
   dataSource: MatTableDataSource<Datum> = new MatTableDataSource<Datum>([]);
 
@@ -31,8 +33,8 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   readonly pageSizeOptions: number[] = [5, 10, 20];
 
-  private readonly localStoragePageIndexKey: string = 'PAGE_INDEX';
-  private readonly localStoragePageSizeKey: string = 'PAGE_SIZE';
+  private readonly localStorageSortKey: string = 'SORT';
+  private readonly localStoragePageKey: string = 'PAGE';
 
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
@@ -49,19 +51,28 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
-    const localStoragePageIndexValue = localStorage.getItem(this.localStoragePageIndexKey);
-    if (localStoragePageIndexValue) {
-      this.pageIndex = +localStoragePageIndexValue;
-      this.paginator.pageIndex = +localStoragePageIndexValue;
+    const localStorageSortValue = localStorage.getItem(this.localStorageSortKey);
+    if (localStorageSortValue) {
+      const sort: Sort = JSON.parse(localStorageSortValue);
+      this.sort.sort({id: sort.active, start: sort.direction} as MatSortable);
     }
-    const localStoragePageSizeValue = localStorage.getItem(this.localStoragePageSizeKey);
-    if (localStoragePageSizeValue) {
-      this.paginator._changePageSize(+localStoragePageSizeValue);
+
+    const localStoragePageValue = localStorage.getItem(this.localStoragePageKey);
+    if (localStoragePageValue) {
+      const pageEvent: PageEvent = JSON.parse(localStoragePageValue)
+      this.pageIndex = pageEvent.pageIndex;
+      this.paginator.pageIndex = pageEvent.pageIndex;
+      this.paginator._changePageSize(pageEvent.pageSize);
     }
   }
 
+  onSortEvent(sort: Sort): void {
+    sort.direction
+      ? localStorage.setItem(this.localStorageSortKey, JSON.stringify(sort))
+      : localStorage.removeItem(this.localStorageSortKey);
+  }
+
   onPageEvent(pageEvent: PageEvent): void {
-    localStorage.setItem(this.localStoragePageIndexKey, `${pageEvent.pageIndex}`);
-    localStorage.setItem(this.localStoragePageSizeKey, `${pageEvent.pageSize}`);
+    localStorage.setItem(this.localStoragePageKey, JSON.stringify(pageEvent));
   }
 }

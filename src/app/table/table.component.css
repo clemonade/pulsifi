@@ -1,3 +1,7 @@
+.hide-row {
+  display: none;
+}
+
 .no-data-row {
   height: 48px;
 }

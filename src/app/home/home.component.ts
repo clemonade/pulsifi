@@ -3,9 +3,7 @@ import {DataService} from "../data.service";
 import {debounceTime, Observable, Subject, takeUntil, tap} from "rxjs";
 import {Datum, Filter} from "../data.model";
 
-//TODO: Validation numberMin < numberMax
-//TODO: Cache sorting
-//TODO: Visualise loading
+//TODO: Fix loading for no matching data on reset form
 //TODO: Fix/update pagination implementation
 
 @Component({
@@ -16,6 +14,7 @@ import {Datum, Filter} from "../data.model";
 export class HomeComponent implements OnInit, OnDestroy {
 
   data: Observable<Datum[]> = this.dataService.getData();
+  isLoading: boolean = true;
 
   private filterChange: Subject<Filter> = new Subject();
   private unsubscribe: Subject<void> = new Subject();
@@ -30,9 +29,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.filterChange
       .pipe(
+        tap(_ => this.isLoading = true),
         takeUntil(this.unsubscribe),
         debounceTime(this.dueTime),
-        tap(filter => this.dataService.filterData(filter))
+        tap(filter => {
+          this.dataService.filterData(filter);
+          this.isLoading = false;
+        })
       ).subscribe();
   }
 

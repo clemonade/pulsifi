@@ -3,6 +3,7 @@
      fxLayoutGap="15px">
   <app-filter (filterChanges)="this.onFilterChange($event)"></app-filter>
   <app-table *ngIf="data | async as data"
-             [data]="data">
+             [data]="data"
+             [isLoading]="isLoading">
   </app-table>
 </div>
